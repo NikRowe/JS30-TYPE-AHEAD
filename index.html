@@ -32,6 +32,11 @@
       })
     }
 
+    // uses regex to format a number with commas // 
+    function numberWithCommas(x) {
+      return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+    }
+
     function displayMatches() {
       const matches = findMatches(this.value, cities) // takes the search value and matches it to the cities array // 
 
@@ -43,7 +48,7 @@
         return `
           <li>
             <span class="name">${cityName}, ${stateName}</span>
-            <span class="population">${place.population}</span>
+            <span class="population">${numberWithCommas(place.population)}</span>
           </li>
         `
       }).join('') // map creates a new array so we use join() to convert into one string. // 
