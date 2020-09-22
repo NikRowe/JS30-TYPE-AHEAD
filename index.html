@@ -37,6 +37,22 @@
       return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
     }
 
+
+    // gets current users permission with authorization // 
+    function getLocation() {
+      if(navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(showPosition)
+      } else {
+        alert("Geolocation is not supported by this browser"); 
+      }
+    }
+    // displays in an alert // 
+    function showPosition(position) {
+      alert(`Latitude: ${position.coords.latitude} \nLongitude: ${position.coords.longitude}`)
+    }
+
+
+
     function displayMatches() {
       const matches = findMatches(this.value, cities) // takes the search value and matches it to the cities array // 
 
