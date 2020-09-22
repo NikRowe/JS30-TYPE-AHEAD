@@ -1,10 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <title>Type Ahead 👀</title>
   <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
 
   <form class="search-form">
@@ -14,9 +16,33 @@
       <li>or a state</li>
     </ul>
   </form>
-<script>
-const endpoint = 'https://gist.githubusercontent.com/Miserlou/c5cd8364bf9b2420bb29/raw/2bf258763cdddd704f8ffd3ea9a3e81d25e2c6f6/cities.json';
+  <script>
+    const endpoint = 'https://gist.githubusercontent.com/Miserlou/c5cd8364bf9b2420bb29/raw/2bf258763cdddd704f8ffd3ea9a3e81d25e2c6f6/cities.json';
 
-</script>
+    const cities = [] // we use Const instead of Let as we don't want the cities changing //
+
+    fetch(endpoint) // Grabs the URL containing the data and returns a promise//
+      .then(fetchPromise => fetchPromise.json()) // takes the .JSON method from the fetch promise and creates a new promise with formatted data // 
+      .then(jsonPromise => cities.push(...jsonPromise)) //takes the .JSON promise pushes the converted data into the cities array[] - we can't simply use cities = jsonPromise because the cities[] is a const - must use spread operator ... to put each city as an array item and not the jsonPromise array into the cities array as a whole creating a nested array (try without ... and check length of the array)//
+
+    function findMatches(wordToMatch, cities) {
+      return cities.filter(place => {
+        const regex = new RegExp(wordToMatch, "gi"); // creates a new regex "g" = global meaning it will search entire array, "i" = insensitive meaning lower && uppercase. 
+        return place.city.match(regex) || place.state.match(regex)
+      })
+    }
+
+    function displayMatches() {
+      const matches = findMatches(this.value, cities)
+      console.log(matches)
+    }
+
+    const searchInput = document.querySelector('.search'); // Grabs the search bar to obtain the "value" property //
+    const suggestions = document.querySelector('.suggestions'); // Grabs the suggestion display //
+
+    searchInput.addEventListener('keyup', displayMatches); // anytime a key is de-pressed run the displayMatches() // 
+
+  </script>
 </body>
+
 </html>
