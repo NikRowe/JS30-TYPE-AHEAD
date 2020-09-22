@@ -40,7 +40,7 @@
     function displayMatches() {
       const matches = findMatches(this.value, cities) // takes the search value and matches it to the cities array // 
 
-      // takes matches and inserts html into suggestions div // 
+      // takes matches and inserts html into suggestions ul // 
       const html = matches.map(place => {
         const regex = new RegExp(this.value, 'gi'); // regex matching the search value // 
         const cityName = place.city.replace(regex, `<span class="hl">${this.value}</span>`) // replaces match with highlighted version // 
