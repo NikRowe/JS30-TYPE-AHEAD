@@ -1,0 +1,24 @@
+{
+  "name": "js30-type-ahead",
+  "version": "1.0.0",
+  "description": "Wes Bos Js30 Challenge #6",
+  "main": "index.js",
+  "scripts": {
+    "start": "npm run lite",
+    "lite": "lite-server",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/NikRowe/JS30-TYPE-AHEAD.git"
+  },
+  "author": "Nik Rowe",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/NikRowe/JS30-TYPE-AHEAD/issues"
+  },
+  "homepage": "https://github.com/NikRowe/JS30-TYPE-AHEAD#readme",
+  "dependencies": {
+    "lite-server": "^2.5.4"
+  }
+}
