@@ -33,8 +33,18 @@
     }
 
     function displayMatches() {
-      const matches = findMatches(this.value, cities)
-      console.log(matches)
+      const matches = findMatches(this.value, cities) // takes the search value and matches it to the cities array // 
+
+      // takes matches and inserts html into suggestions div // 
+      const html = matches.map(place => {
+        return `
+          <li>
+            <span class="name">${place.city}, ${place.state}</span>
+            <span class="population">${place.population}</span>
+          </li>
+        `
+      }).join('') // map creates a new array so we use join() to convert into one string. // 
+      suggestions.innerHTML = html; 
     }
 
     const searchInput = document.querySelector('.search'); // Grabs the search bar to obtain the "value" property //
