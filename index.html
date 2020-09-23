@@ -40,6 +40,8 @@
       return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
     }
 
+    const geolib = require('geolib')
+
     function displayMatches() {
       const matches = findMatches(this.value, cities) // takes the search value and matches it to the cities array // 
       
@@ -58,7 +60,7 @@
             longitude: long,
             latitude: lat
           }
-          const byDistance = window.geolib.orderByDistance(cPos, matches)
+          const byDistance = geolib.orderByDistance(cPos, matches)
           console.log('Original :', matches)
           console.log('By Distance: ', byDistance)
 
