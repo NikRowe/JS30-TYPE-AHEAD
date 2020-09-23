@@ -23,7 +23,6 @@
     const endpoint = 'https://gist.githubusercontent.com/Miserlou/c5cd8364bf9b2420bb29/raw/2bf258763cdddd704f8ffd3ea9a3e81d25e2c6f6/cities.json';
 
     const cities = [] // we use Const instead of Let as we don't want the cities changing //
-    let currentPosition = {}
 
     fetch(endpoint) // Grabs the URL containing the data and returns a promise//
       .then(fetchPromise => fetchPromise.json()) // takes the .JSON method from the fetch promise and creates a new promise with formatted data // 
