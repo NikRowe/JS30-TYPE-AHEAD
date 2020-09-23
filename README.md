@@ -7,4 +7,4 @@ I found it extremely helpful that Wes recapped fetch() and explained it from ano
 
 I took the additional challenge to sort the results by Geo Location distance to the users current position. After about six hours I was able to solve this by using the Geolocation API to ask for permission and then get the users current location, then implement Geolib's orderByDistance() method to re-sort the type ahead matched results by distance (as the crow flies) to the user. I used <a href="https://www.freemaptools.com/how-far-is-it-between.htm"> FreeMapTools.com </a> to verify the list. i.e. Anchorage, Alaska is actually closer to Placerville, CA than Auburn, Alabama. 
 
-<a href="https://nikrowedevjs30-type-ahead.netlify.app/"> Netlify Demo </a>
+<a href="https://nikrowedevjs30-type-ahead.netlify.app/" target='_blank'> Netlify Demo </a>
