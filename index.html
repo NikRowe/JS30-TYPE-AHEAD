@@ -5,6 +5,8 @@
   <meta charset="UTF-8">
   <title>Type Ahead 👀</title>
   <link rel="stylesheet" href="style.css">
+  <script src="/node_modules/geolib/lib/index.js"></script>
+
 </head>
 
 <body>
@@ -20,6 +22,7 @@
     const endpoint = 'https://gist.githubusercontent.com/Miserlou/c5cd8364bf9b2420bb29/raw/2bf258763cdddd704f8ffd3ea9a3e81d25e2c6f6/cities.json';
 
     const cities = [] // we use Const instead of Let as we don't want the cities changing //
+    let currentPosition = {}
 
     fetch(endpoint) // Grabs the URL containing the data and returns a promise//
       .then(fetchPromise => fetchPromise.json()) // takes the .JSON method from the fetch promise and creates a new promise with formatted data // 
@@ -37,38 +40,44 @@
       return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
     }
 
-
-    // gets current users permission with authorization // 
-    function getLocation() {
-      if(navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(showPosition)
-      } else {
-        alert("Geolocation is not supported by this browser"); 
-      }
-    }
-    // displays in an alert // 
-    function showPosition(position) {
-      alert(`Latitude: ${position.coords.latitude} \nLongitude: ${position.coords.longitude}`)
-    }
-
-
-
     function displayMatches() {
       const matches = findMatches(this.value, cities) // takes the search value and matches it to the cities array // 
+      
+      // gets current users permission with authorization // 
+      function getLocation() {
+        if (navigator.geolocation) {
+          navigator.geolocation.getCurrentPosition(showPosition)
+        } else {
+          alert("Geolocation is not supported by this browser");
+        }
+        // displays getLocation results // 
+        function showPosition(position) {
+          const long = position.coords.longitude
+          const lat = position.coords.latitude
+          const cPos = {
+            longitude: long,
+            latitude: lat
+          }
+          const byDistance = geolib.orderByDistance(cPos, matches)
+          console.log('Original :', matches)
+          console.log('By Distance: ', byDistance)
 
-      // takes matches and inserts html into suggestions ul // 
-      const html = matches.map(place => {
-        const regex = new RegExp(this.value, 'gi'); // regex matching the search value // 
-        const cityName = place.city.replace(regex, `<span class="hl">${this.value}</span>`) // replaces match with highlighted version // 
-        const stateName = place.state.replace(regex, `<span class="hl">${this.value}</span>`) 
-        return `
-          <li>
-            <span class="name">${cityName}, ${stateName}</span>
-            <span class="population">${numberWithCommas(place.population)}</span>
-          </li>
-        `
-      }).join('') // map creates a new array so we use join() to convert into one string. // 
-      suggestions.innerHTML = html; 
+          // takes results and inserts html into suggestions ul // 
+          const html = byDistance.map(place => {
+            const regex = new RegExp(searchInput.value, 'gi'); // regex matching the search value // 
+            const cityName = place.city.replace(regex, `<span class="hl">${searchInput.value}</span>`) // replaces match with highlighted version // 
+            const stateName = place.state.replace(regex, `<span class="hl">${searchInput.value}</span>`)
+            return `
+            <li>
+              <span class="name">${cityName}, ${stateName}</span>
+              <span class="population">${numberWithCommas(place.population)}</span>
+            </li>
+          `
+          }).join('') // map creates a new array so we use join() to convert into one string. // 
+          suggestions.innerHTML = html;
+        }
+      }
+      getLocation()
     }
 
     const searchInput = document.querySelector('.search'); // Grabs the search bar to obtain the "value" property //
